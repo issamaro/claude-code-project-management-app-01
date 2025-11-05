@@ -6,25 +6,57 @@
     --pico-primary-inverse: #fff;
 }
 
-/* Dark mode colors */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) {
-        --pico-primary: #7c3aed;
-        --pico-primary-hover: #8b5cf6;
-        --pico-primary-focus: rgba(124, 58, 237, 0.25);
-    }
-}
-
 /* Light mode */
 [data-theme="light"] {
     --pico-primary: #6c5ce7;
     --pico-primary-hover: #5f3dc4;
+    --pico-primary-focus: rgba(108, 92, 231, 0.125);
+    --column-header-bg: rgba(108, 92, 231, 0.05);
+    --add-card-hover-bg: rgba(108, 92, 231, 0.1);
+    --drop-active-bg: rgba(108, 92, 231, 0.05);
 }
 
 /* Dark mode */
 [data-theme="dark"] {
     --pico-primary: #7c3aed;
     --pico-primary-hover: #8b5cf6;
+    --pico-primary-focus: rgba(124, 58, 237, 0.25);
+    --column-header-bg: rgba(124, 58, 237, 0.08);
+    --add-card-hover-bg: rgba(124, 58, 237, 0.15);
+    --drop-active-bg: rgba(124, 58, 237, 0.08);
+}
+
+/* Respect system preference if no theme is set */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --pico-primary: #7c3aed;
+        --pico-primary-hover: #8b5cf6;
+        --pico-primary-focus: rgba(124, 58, 237, 0.25);
+        --column-header-bg: rgba(124, 58, 237, 0.08);
+        --add-card-hover-bg: rgba(124, 58, 237, 0.15);
+        --drop-active-bg: rgba(124, 58, 237, 0.08);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme]) {
+        --pico-primary: #6c5ce7;
+        --pico-primary-hover: #5f3dc4;
+        --pico-primary-focus: rgba(108, 92, 231, 0.125);
+        --column-header-bg: rgba(108, 92, 231, 0.05);
+        --add-card-hover-bg: rgba(108, 92, 231, 0.1);
+        --drop-active-bg: rgba(108, 92, 231, 0.05);
+    }
+}
+
+/* Smooth theme transition for major elements */
+body,
+main,
+.kanban-column,
+.card,
+.column-header,
+dialog article {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 /* Main layout */
@@ -44,6 +76,22 @@ header {
 header h1 {
     margin: 0;
     flex: 1;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+#themeToggle {
+    padding: 0.5rem 1rem;
+    min-width: auto;
+}
+
+#themeIcon {
+    font-size: 1.2rem;
+    display: inline-block;
 }
 
 /* Kanban board */
@@ -75,7 +123,7 @@ header h1 {
     align-items: center;
     padding: 1rem;
     border-bottom: 2px solid var(--pico-primary);
-    background: rgba(108, 92, 231, 0.05);
+    background: var(--column-header-bg);
 }
 
 .column-header h2 {
@@ -209,8 +257,8 @@ header h1 {
 }
 
 .add-card-btn:hover {
-    background: rgba(108, 92, 231, 0.1);
-    box-shadow: 0 2px 8px rgba(108, 92, 231, 0.2);
+    background: var(--add-card-hover-bg);
+    box-shadow: 0 2px 8px var(--pico-primary-focus);
 }
 
 /* Column actions */
@@ -227,7 +275,7 @@ header h1 {
 /* Drop zone styling */
 .cards-container.drop-active {
     border: 2px dashed var(--pico-primary);
-    background: rgba(108, 92, 231, 0.05);
+    background: var(--drop-active-bg);
 }
 
 /* Modal styling */
@@ -279,8 +327,17 @@ dialog article {
         text-align: center;
     }
 
-    header button {
+    .header-actions {
         width: 100%;
+    }
+
+    .header-actions button {
+        flex: 1;
+    }
+
+    #themeToggle {
+        min-width: 60px;
+        flex: 0 0 auto;
     }
 }
 
