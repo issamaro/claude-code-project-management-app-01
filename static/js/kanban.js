@@ -13,14 +13,45 @@ const columnForm = document.getElementById('columnForm');
 const cardTitle = document.getElementById('cardTitle');
 const cardNotes = document.getElementById('cardNotes');
 
+// Theme management
+const THEME_KEY = 'kanban-theme';
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
     loadColumns();
     setupEventListeners();
 });
 
+// Theme functions
+function initializeTheme() {
+    // Get saved theme or default to light
+    const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
+    setTheme(savedTheme);
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME_KEY, theme);
+    updateThemeIcon(theme);
+}
+
+function updateThemeIcon(theme) {
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+}
+
 // Event listeners
 function setupEventListeners() {
+    themeToggle.addEventListener('click', toggleTheme);
+
     addColumnBtn.addEventListener('click', () => {
         currentCardId = null;
         columnModal.showModal();
