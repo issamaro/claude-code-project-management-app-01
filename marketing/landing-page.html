@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The simplest kanban board. No login required. Just drag, drop, and organize your tasks beautifully.">
+    <meta name="keywords" content="kanban, project management, task management, productivity, agile, simple, free">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Simple Kanban - Project Management Made Simple">
+    <meta property="og:description" content="No login. No setup. Just drag, drop, and get things done.">
+    <meta property="og:image" content="/path-to-og-image.jpg">
+
+    <title>Simple Kanban - Project Management Made Simple</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="landing-page.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="2" y="2" width="8" height="28" rx="2" fill="#6c5ce7"/>
+                        <rect x="12" y="6" width="8" height="20" rx="2" fill="#6c5ce7" opacity="0.7"/>
+                        <rect x="22" y="10" width="8" height="12" rx="2" fill="#6c5ce7" opacity="0.4"/>
+                    </svg>
+                    <span class="logo-text">Simple Kanban</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="https://github.com/your-repo" target="_blank">GitHub</a>
+                    <a href="/app" class="btn btn-primary">Try It Free</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#pricing">Pricing</a>
+        <a href="https://github.com/your-repo" target="_blank">GitHub</a>
+        <a href="/app" class="btn btn-primary">Try It Free</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>✨ Open Source & Free Forever</span>
+                </div>
+                <h1 class="hero-title">
+                    Project Management<br/>
+                    <span class="gradient-text">Made Simple</span>
+                </h1>
+                <p class="hero-subtitle">
+                    No login. No setup. No complexity.<br/>
+                    Just drag, drop, and organize your tasks beautifully.
+                </p>
+                <div class="hero-cta">
+                    <a href="/app" class="btn btn-large btn-primary">
+                        Start Organizing Now
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#how-it-works" class="btn btn-large btn-secondary">
+                        See How It Works
+                    </a>
+                </div>
+                <p class="hero-note">
+                    ⚡ Ready in 5 seconds &nbsp;•&nbsp; 🚫 No credit card required &nbsp;•&nbsp; 💜 Always free
+                </p>
+            </div>
+
+            <!-- Hero Image / Demo -->
+            <div class="hero-image">
+                <div class="browser-mockup">
+                    <div class="browser-header">
+                        <div class="browser-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="browser-url">simplekanban.com/app</div>
+                    </div>
+                    <div class="browser-content">
+                        <!-- Mini Kanban Board Preview -->
+                        <div class="mini-kanban">
+                            <div class="mini-column">
+                                <div class="mini-column-header">TODO</div>
+                                <div class="mini-card">Design landing page</div>
+                                <div class="mini-card">Fix mobile bug</div>
+                                <div class="mini-card">Write blog post</div>
+                            </div>
+                            <div class="mini-column">
+                                <div class="mini-column-header">In Progress</div>
+                                <div class="mini-card mini-card-active">Build new feature</div>
+                                <div class="mini-card">Code review</div>
+                            </div>
+                            <div class="mini-column">
+                                <div class="mini-column-header">Done</div>
+                                <div class="mini-card mini-card-done">Launch campaign</div>
+                                <div class="mini-card mini-card-done">Update docs</div>
+                                <div class="mini-card mini-card-done">Team meeting</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="social-proof">
+        <div class="container">
+            <p class="social-proof-text">Trusted by developers, designers, and teams who value simplicity</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">10,000+</div>
+                    <div class="stat-label">Tasks Organized</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">1,500+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">GitHub Stars</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tired of Overcomplicated Tools?</h2>
+                <p>You're not alone. Most project management software is bloated with features you'll never use.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">😫</div>
+                    <h3>Complex Setup</h3>
+                    <p>10-step onboarding flows, team invites, workspace configuration... just to track TODO lists?</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">💸</div>
+                    <h3>Expensive Subscriptions</h3>
+                    <p>$15/user/month adds up fast. Why pay $1,440/year for a glorified sticky note app?</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🤯</div>
+                    <h3>Feature Overload</h3>
+                    <p>Gantt charts, time tracking, budget management... You just wanted to organize tasks!</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🐌</div>
+                    <h3>Slow & Clunky</h3>
+                    <p>Waiting for pages to load, dealing with lag, wrestling with unresponsive drag-and-drop.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution / Features Section -->
+    <section class="features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Everything You Need.<br/>Nothing You Don't.</h2>
+                <p>Five features that actually matter, done really well.</p>
+            </div>
+
+            <div class="feature-showcase">
+                <!-- Feature 1 -->
+                <div class="feature-item">
+                    <div class="feature-content">
+                        <div class="feature-number">01</div>
+                        <h3>No Login Required</h3>
+                        <p>Open the page and start organizing. No sign-up forms. No email verification. No password to remember.</p>
+                        <p>Just click and use. Revolutionary, right?</p>
+                        <div class="feature-benefits">
+                            <span class="benefit-tag">✓ Instant access</span>
+                            <span class="benefit-tag">✓ No data collection</span>
+                            <span class="benefit-tag">✓ Privacy first</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="visual-card instant-access">
+                            <div class="check-animation">✓</div>
+                            <p>You're in!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-item feature-item-reverse">
+                    <div class="feature-visual">
+                        <div class="visual-card drag-demo">
+                            <div class="drag-card">Task 1</div>
+                            <div class="drag-arrow">→</div>
+                            <div class="drag-card drag-card-moved">Task 1</div>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-number">02</div>
+                        <h3>Drag & Drop Magic</h3>
+                        <p>Smooth, responsive, and it goes exactly where you expect. No lag. No jumping. No refresh needed.</p>
+                        <p>We spent weeks perfecting the feel. You'll notice.</p>
+                        <div class="feature-benefits">
+                            <span class="benefit-tag">✓ Silky smooth</span>
+                            <span class="benefit-tag">✓ Touch-friendly</span>
+                            <span class="benefit-tag">✓ Visual feedback</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-item">
+                    <div class="feature-content">
+                        <div class="feature-number">03</div>
+                        <h3>Custom Columns</h3>
+                        <p>Start with TODO → In Progress → Done. Need more? Add "Design", "Review", "Blocked", or whatever matches your workflow.</p>
+                        <p>One click to add. One click to rename. That simple.</p>
+                        <div class="feature-benefits">
+                            <span class="benefit-tag">✓ Unlimited columns</span>
+                            <span class="benefit-tag">✓ Reorderable</span>
+                            <span class="benefit-tag">✓ Your workflow</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="visual-card columns-demo">
+                            <div class="demo-columns">
+                                <div class="demo-col">TODO</div>
+                                <div class="demo-col">Design</div>
+                                <div class="demo-col">Review</div>
+                                <div class="demo-col demo-col-new">+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-item feature-item-reverse">
+                    <div class="feature-visual">
+                        <div class="visual-card autosave-demo">
+                            <div class="save-indicator">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20 6L9 17L4 12" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <span>Auto-saved</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <div class="feature-number">04</div>
+                        <h3>Instant Auto-Save</h3>
+                        <p>Move a card? Saved. Edit a title? Saved. Add a note? Saved.</p>
+                        <p>You'll never click "Save" once. It just happens in the background.</p>
+                        <div class="feature-benefits">
+                            <span class="benefit-tag">✓ Never lose work</span>
+                            <span class="benefit-tag">✓ No manual saving</span>
+                            <span class="benefit-tag">✓ Always synced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-item">
+                    <div class="feature-content">
+                        <div class="feature-number">05</div>
+                        <h3>Truly Responsive</h3>
+                        <p>Not just "mobile-friendly." Drag tasks with your thumb on your phone and it feels natural.</p>
+                        <p>Desktop, tablet, phone—same great experience everywhere.</p>
+                        <div class="feature-benefits">
+                            <span class="benefit-tag">✓ Works anywhere</span>
+                            <span class="benefit-tag">✓ Touch optimized</span>
+                            <span class="benefit-tag">✓ Always accessible</span>
+                        </div>
+                    </div>
+                    <div class="feature-visual">
+                        <div class="visual-card responsive-demo">
+                            <div class="devices">
+                                <div class="device-desktop"></div>
+                                <div class="device-tablet"></div>
+                                <div class="device-mobile"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>Get Organized in 3 Simple Steps</h2>
+                <p>Seriously, that's all it takes.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Click the Link</h3>
+                    <p>No sign-up. No download. Just open the page and you're in.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Add Your Tasks</h3>
+                    <p>Click "Add Task" and type what needs doing. Takes 5 seconds per task.</p>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Drag & Organize</h3>
+                    <p>Move tasks between columns as you work. Watch your progress visually.</p>
+                </div>
+            </div>
+            <div class="cta-center">
+                <a href="/app" class="btn btn-large btn-primary">Try It Now - It's Free</a>
+                <p class="cta-note">Takes literally 5 seconds to get started</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple Kanban vs. Others</h2>
+                <p>We're not saying other tools are bad. We're just... simpler.</p>
+            </div>
+            <div class="comparison-table">
+                <div class="comparison-row comparison-header">
+                    <div class="comparison-feature">Feature</div>
+                    <div class="comparison-us">Simple Kanban</div>
+                    <div class="comparison-them">Others</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Setup Time</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        5 seconds
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        10+ minutes
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Login Required</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        No
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        Yes
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Price</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        Free forever
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        $10-20/user/month
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Self-Hostable</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        Yes
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        Rarely
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Open Source</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        MIT License
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        Proprietary
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Mobile Experience</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        Perfect
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        Clunky
+                    </div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comparison-feature">Feature Bloat</div>
+                    <div class="comparison-us">
+                        <span class="check">✓</span>
+                        None
+                    </div>
+                    <div class="comparison-them">
+                        <span class="cross">✗</span>
+                        Overwhelming
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <h2>Who Uses Simple Kanban?</h2>
+                <p>From solo developers to creative agencies—anyone who values simplicity.</p>
+            </div>
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">💻</div>
+                    <h3>Software Teams</h3>
+                    <p>Track features from backlog to production. Perfect for agile workflows without the complexity.</p>
+                    <div class="use-case-example">
+                        <strong>Columns:</strong> Backlog → Sprint → Dev → Review → Deployed
+                    </div>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">🎨</div>
+                    <h3>Design Agencies</h3>
+                    <p>Manage client projects visually. See what's in design, review, or awaiting feedback at a glance.</p>
+                    <div class="use-case-example">
+                        <strong>Columns:</strong> Requests → Queued → Design → Review → Completed
+                    </div>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">✍️</div>
+                    <h3>Content Creators</h3>
+                    <p>Track articles, videos, and posts from idea to published. Never lose a content idea again.</p>
+                    <div class="use-case-example">
+                        <strong>Columns:</strong> Ideas → Research → Writing → Editing → Published
+                    </div>
+                </div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏠</div>
+                    <h3>Personal Projects</h3>
+                    <p>Home renovations, learning goals, side projects—organize any part of your life visually.</p>
+                    <div class="use-case-example">
+                        <strong>Columns:</strong> Ideas → Planning → In Progress → Completed
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What People Are Saying</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"I've tried Trello, Asana, Monday.com... This is the first kanban board I actually enjoy opening. It's so fast and simple."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <div class="author-name">Sarah Martinez</div>
+                            <div class="author-title">Product Manager</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Finally, project management software that doesn't require a training session. My team started using it without asking me a single question."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JC</div>
+                        <div class="author-info">
+                            <div class="author-name">James Chen</div>
+                            <div class="author-title">Engineering Lead</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">"Clean code, simple architecture, actually self-hostable. As a developer, I appreciate the technical decisions here."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AP</div>
+                        <div class="author-info">
+                            <div class="author-name">Alex Peterson</div>
+                            <div class="author-title">Full Stack Developer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Section (For Developers) -->
+    <section class="technical-section">
+        <div class="container">
+            <div class="technical-content">
+                <div class="technical-info">
+                    <h2>Built for Developers</h2>
+                    <p class="lead">Clean code. Simple architecture. Self-hostable. Open source.</p>
+
+                    <div class="tech-stack">
+                        <h3>Tech Stack</h3>
+                        <div class="tech-badges">
+                            <span class="tech-badge">FastAPI</span>
+                            <span class="tech-badge">SQLAlchemy</span>
+                            <span class="tech-badge">SQLite</span>
+                            <span class="tech-badge">Vanilla JS</span>
+                            <span class="tech-badge">PicoCSS</span>
+                        </div>
+                    </div>
+
+                    <div class="tech-features">
+                        <div class="tech-feature">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 11L12 14L22 4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span>< 1000 lines of code</span>
+                        </div>
+                        <div class="tech-feature">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 11L12 14L22 4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span>No build process needed</span>
+                        </div>
+                        <div class="tech-feature">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 11L12 14L22 4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span>Runs on $5/month VPS</span>
+                        </div>
+                        <div class="tech-feature">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 11L12 14L22 4" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="#6c5ce7" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span>MIT License</span>
+                        </div>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="https://github.com/your-repo" class="btn btn-secondary" target="_blank">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                            View on GitHub
+                        </a>
+                        <a href="#" class="btn btn-outline">Read the Docs</a>
+                    </div>
+                </div>
+                <div class="code-preview">
+                    <div class="code-window">
+                        <div class="code-window-header">
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-dot"></span>
+                            <span class="code-title">Self-host in seconds</span>
+                        </div>
+                        <pre class="code-content"><code># Clone the repo
+git clone https://github.com/your-repo.git
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+python main.py
+
+# Open http://localhost:8000
+# That's it. You're done.</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple Pricing</h2>
+                <p>Spoiler alert: It's free.</p>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Cloud Hosted</h3>
+                        <div class="price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/forever</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ No login required</li>
+                        <li>✓ Unlimited boards</li>
+                        <li>✓ Unlimited cards</li>
+                        <li>✓ Unlimited columns</li>
+                        <li>✓ Auto-save</li>
+                        <li>✓ Mobile responsive</li>
+                        <li>✓ Beautiful UI</li>
+                        <li>✓ Always free</li>
+                    </ul>
+                    <a href="/app" class="btn btn-primary btn-block">Start Now</a>
+                </div>
+                <div class="pricing-card pricing-card-featured">
+                    <div class="pricing-badge">For Developers</div>
+                    <div class="pricing-header">
+                        <h3>Self-Hosted</h3>
+                        <div class="price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/forever</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Everything in Cloud</li>
+                        <li>✓ Your data, your server</li>
+                        <li>✓ Full source code access</li>
+                        <li>✓ Customize everything</li>
+                        <li>✓ No external dependencies</li>
+                        <li>✓ MIT License</li>
+                        <li>✓ Deploy anywhere</li>
+                        <li>✓ Commercial use OK</li>
+                    </ul>
+                    <a href="https://github.com/your-repo" class="btn btn-primary btn-block">Get the Code</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <div class="price">
+                            <span class="price-amount">$0</span>
+                            <span class="price-period">/still free</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Everything above</li>
+                        <li>✓ Same great software</li>
+                        <li>✓ Still no cost</li>
+                        <li>✓ No sales calls</li>
+                        <li>✓ No contracts</li>
+                        <li>✓ No "contact us"</li>
+                        <li>✓ Just use it</li>
+                        <li>✓ Forever free</li>
+                    </ul>
+                    <a href="/app" class="btn btn-outline btn-block">Start Now</a>
+                </div>
+            </div>
+            <p class="pricing-note">
+                Seriously, it's free. No catch. We built this because we wanted it to exist.<br/>
+                If you love it, star us on GitHub. That's all we ask.
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Is it really free?</h3>
+                    <p>Yes. No trial period. No credit card. No premium tier. Just free, forever. We built this because we wanted it to exist, not to make money.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need to create an account?</h3>
+                    <p>Nope. Just open the page and start using it. No email, no password, no "confirm your account" email.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Where is my data stored?</h3>
+                    <p>On our servers if you use the cloud version. On your server if you self-host. All data is stored in a SQLite database—simple and portable.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I use this with my team?</h3>
+                    <p>Currently, it's designed for individual use or teams that share access to a single board. Team collaboration features may come in the future.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is my data private?</h3>
+                    <p>Yes. We don't track, analyze, or sell your data. If you self-host, your data never leaves your server. Simple as that.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I export my data?</h3>
+                    <p>Absolutely. It's stored in SQLite, so you can export it anytime. If you self-host, you have direct access to the database file.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What tech stack is it built with?</h3>
+                    <p>Backend: FastAPI + SQLAlchemy + SQLite. Frontend: Vanilla JavaScript + PicoCSS. Clean, simple, fast.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I contribute to the project?</h3>
+                    <p>Yes! It's open source (MIT License). Fork it, improve it, send PRs. We welcome contributions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Will you add [feature]?</h3>
+                    <p>Maybe! Our philosophy is "less is more," but we're open to suggestions. Open an issue on GitHub and let's discuss.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Why did you build this?</h3>
+                    <p>We were frustrated with overcomplicated project management tools. So we built what we always wanted: simple, fast, and beautiful.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="final-cta-content">
+                <h2>Ready to Organize Your Tasks?</h2>
+                <p class="lead">No sign-up. No setup. No complexity.<br/>Just click and start organizing.</p>
+                <a href="/app" class="btn btn-large btn-primary">Start Using Simple Kanban</a>
+                <p class="cta-note">Free forever • Ready in 5 seconds • No credit card required</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="2" y="2" width="8" height="28" rx="2" fill="#6c5ce7"/>
+                            <rect x="12" y="6" width="8" height="20" rx="2" fill="#6c5ce7" opacity="0.7"/>
+                            <rect x="22" y="10" width="8" height="12" rx="2" fill="#6c5ce7" opacity="0.4"/>
+                        </svg>
+                        <span>Simple Kanban</span>
+                    </div>
+                    <p>Project management made simple.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/your-repo" target="_blank" aria-label="GitHub">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://twitter.com/your-handle" target="_blank" aria-label="Twitter">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="/app">Try It Free</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/your-repo" target="_blank">Documentation</a></li>
+                        <li><a href="https://github.com/your-repo" target="_blank">GitHub</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Changelog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Simple Kanban. Open source under MIT License.</p>
+                <p>Made with 💜 by developers who were tired of complicated tools.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="landing-page.js"></script>
+</body>
+</html>
