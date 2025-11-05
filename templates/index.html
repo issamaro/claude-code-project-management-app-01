@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/custom.css') }}">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Project Management</h1>
+            <button id="addColumnBtn" class="outline">+ Add Column</button>
+        </header>
+
+        <div class="kanban-board" id="kanbanBoard">
+            <!-- Columns will be loaded here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal for adding/editing cards -->
+    <dialog id="cardModal">
+        <article>
+            <header>
+                <button aria-label="Close" rel="prev"></button>
+                <h2 id="modalTitle">Add Task</h2>
+            </header>
+            <form id="cardForm">
+                <fieldset>
+                    <label for="cardTitle">Task Title</label>
+                    <input type="text" id="cardTitle" name="cardTitle" placeholder="Enter task title" required>
+
+                    <label for="cardNotes">Notes</label>
+                    <textarea id="cardNotes" name="cardNotes" placeholder="Add notes..."></textarea>
+                </fieldset>
+                <fieldset class="grid">
+                    <button type="submit" id="submitCardBtn">Add Task</button>
+                    <button type="button" onclick="document.getElementById('cardModal').close()">Cancel</button>
+                </fieldset>
+            </form>
+        </article>
+    </dialog>
+
+    <!-- Modal for adding a new column -->
+    <dialog id="columnModal">
+        <article>
+            <header>
+                <button aria-label="Close" rel="prev"></button>
+                <h2>Add Column</h2>
+            </header>
+            <form id="columnForm">
+                <fieldset>
+                    <label for="columnTitle">Column Title</label>
+                    <input type="text" id="columnTitle" name="columnTitle" placeholder="Enter column title" required>
+                </fieldset>
+                <fieldset class="grid">
+                    <button type="submit">Add Column</button>
+                    <button type="button" onclick="document.getElementById('columnModal').close()">Cancel</button>
+                </fieldset>
+            </form>
+        </article>
+    </dialog>
+
+    <script src="{{ url_for('static', path='/js/kanban.js') }}"></script>
+</body>
+</html>
