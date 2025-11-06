@@ -52,11 +52,13 @@ setup_test_environment() {
     # Kill any existing server processes
     lsof -ti:8000 2>/dev/null | xargs kill -9 2>/dev/null
 
-    # Remove old database to ensure clean state
-    rm -f ../kanban.db
+    # Remove old TEST database to ensure clean state
+    rm -f ../kanban.test.db
 
-    # Start server in background
+    # Start server in background with TEST database
     cd ..
+    # Set DATABASE_URL environment variable to use test database
+    export DATABASE_URL="sqlite:///./kanban.test.db"
     python main.py > /dev/null 2>&1 &
     SERVER_PID=$!
     cd tests
@@ -65,7 +67,7 @@ setup_test_environment() {
     echo "Waiting for server to start..."
     for i in {1..30}; do
         if curl -s "${BASE_URL}/api/columns" > /dev/null 2>&1; then
-            echo "Server started successfully (PID: $SERVER_PID)"
+            echo "Server started successfully (PID: $SERVER_PID) with test database"
             return 0
         fi
         sleep 1
@@ -705,7 +707,9 @@ echo "=================================================="
 echo ""
 
 # Note: Tests expect the server to be running on localhost:8000
-# You can optionally run: setup_test_environment to start a fresh server with clean database
+# IMPORTANT: Tests now use a separate test database (kanban.test.db)
+# Your production database (kanban.db) will NOT be affected
+# You can optionally run: setup_test_environment to start a fresh server with clean test database
 
 # Run all tests
 test_get_columns

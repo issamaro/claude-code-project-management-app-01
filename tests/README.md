@@ -6,6 +6,8 @@ Comprehensive automated testing suite for the Project Management Kanban Board ap
 
 This test suite validates all API endpoints, data integrity, and prevents regression issues. It includes 17 automated tests covering column management, card management, data integrity, and specific regression tests.
 
+**Important**: Tests now use a separate test database (`kanban.test.db`) so your production data in `kanban.db` is never affected during testing.
+
 ## Prerequisites
 
 - **Server Running**: The FastAPI application must be running on `http://localhost:8000`
@@ -116,16 +118,46 @@ fi
 
 ## Test Data Management
 
+### Separate Test Database
+
+The test suite uses a **separate test database** (`kanban.test.db`) that is completely independent from your production database (`kanban.db`). This means:
+
+- ✅ Your real cards and columns are NEVER affected by tests
+- ✅ Tests can run without worrying about data loss
+- ✅ You can inspect test data without affecting production
+
+The test script automatically:
+1. Sets `DATABASE_URL=sqlite:///./kanban.test.db` environment variable
+2. Deletes the old test database before each run
+3. Creates a fresh test database with default columns
+4. Runs all tests against the test database
+
+### Test Data Created
+
 The test suite creates temporary test data:
 - Columns named "Test Column [timestamp]"
 - Cards named "Test Card [timestamp]"
 
-**Note**: Tests do NOT clean up test data automatically. This allows inspection after test runs. To clean up:
+**Note**: Tests do NOT clean up test data automatically. This allows inspection after test runs. To clean up the test database:
 
 ```bash
-# Delete the database and restart (from project root)
-rm kanban.db
-python main.py  # This will recreate default columns
+# Delete the test database (from project root)
+rm kanban.test.db
+
+# Your production database (kanban.db) remains untouched
+```
+
+### Manual Testing with Test Database
+
+If you want to manually test with the test database without affecting production:
+
+```bash
+# Set environment variable and start server
+export DATABASE_URL="sqlite:///./kanban.test.db"
+python main.py
+
+# In another terminal, interact with the test database
+# When done, restart without the environment variable to use production database
 ```
 
 ## Troubleshooting
