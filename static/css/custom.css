@@ -96,10 +96,11 @@ header h1 {
 
 /* Kanban board */
 .kanban-board {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
     gap: 1.25rem;
     align-items: start;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
 }
 
 /* Column styling */
@@ -111,6 +112,10 @@ header h1 {
     border-radius: var(--pico-border-radius);
     overflow: hidden;
     transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.2s ease;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 700px;
+    min-width: 300px;
 }
 
 .kanban-column:hover {
@@ -406,7 +411,8 @@ dialog article {
 /* Responsive design */
 @media (max-width: 768px) {
     .kanban-board {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        overflow-x: visible;
     }
 
     header {
