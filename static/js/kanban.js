@@ -206,6 +206,20 @@ function createCardElement(card) {
     notesDiv.className = 'card-notes';
     notesDiv.textContent = card.notes || 'No notes';
 
+    // Create a wrapper for notes and the "See more" button
+    const notesContainer = document.createElement('div');
+    notesContainer.className = 'card-notes-container';
+
+    // Create "See more/less" button
+    const seeMoreBtn = document.createElement('button');
+    seeMoreBtn.className = 'see-more-btn';
+    seeMoreBtn.textContent = 'See more...';
+    seeMoreBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isExpanded = notesDiv.classList.toggle('expanded');
+        seeMoreBtn.textContent = isExpanded ? 'See less' : 'See more...';
+    });
+
     const footer = document.createElement('div');
     footer.className = 'card-footer';
 
@@ -239,7 +253,24 @@ function createCardElement(card) {
     footer.appendChild(deleteBtn);
 
     cardDiv.appendChild(title);
-    if (card.notes) cardDiv.appendChild(notesDiv);
+    if (card.notes) {
+        notesContainer.appendChild(notesDiv);
+
+        // Check if notes need "See more" button by detecting truncation
+        // We'll add the button and check after the card is in the DOM
+        notesContainer.appendChild(seeMoreBtn);
+        cardDiv.appendChild(notesContainer);
+
+        // Check if content is actually truncated after it's rendered
+        setTimeout(() => {
+            const isOverflowing = notesDiv.scrollHeight > notesDiv.clientHeight;
+            if (isOverflowing) {
+                seeMoreBtn.style.display = 'inline-block';
+            } else {
+                seeMoreBtn.style.display = 'none';
+            }
+        }, 0);
+    }
     cardDiv.appendChild(footer);
 
     // Drag events
