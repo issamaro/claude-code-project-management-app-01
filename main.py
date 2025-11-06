@@ -78,6 +78,13 @@ class CreateColumnRequest(BaseModel):
 
 class UpdateColumnRequest(BaseModel):
     title: str
+class ColumnPositionUpdate(BaseModel):
+    id: int
+    position: float
+
+
+class ReorderColumnsRequest(BaseModel):
+    columns: List[ColumnPositionUpdate]
 
 
 # Routes
@@ -218,6 +225,22 @@ async def delete_column(column_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": f"Column deleted. {len(cards)} card(s) moved to {leftmost_column.title}"}
+
+
+@app.patch("/api/columns/reorder")
+async def reorder_columns(request: ReorderColumnsRequest, db: Session = Depends(get_db)):
+    """Update the position of multiple columns."""
+    try:
+        for col_update in request.columns:
+            column = db.query(Column).filter(Column.id == col_update.id).first()
+            if column:
+                column.position = col_update.position
+
+        db.commit()
+        return {"message": "Column order updated successfully"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Failed to update column order: {str(e)}")
 
 
 @app.post("/api/cards", response_model=CardSchema)

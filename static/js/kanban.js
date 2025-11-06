@@ -2,6 +2,8 @@
 let columns = [];
 let currentCardId = null;
 let draggedCard = null;
+let draggedColumn = null;
+let dragOverColumn = null;
 
 // Elements
 const kanbanBoard = document.getElementById('kanbanBoard');
@@ -85,6 +87,7 @@ async function loadColumns() {
         const response = await fetch('/api/columns');
         if (!response.ok) throw new Error('Failed to load columns');
         columns = await response.json();
+        loadColumnOrder(); // Apply saved column order from localStorage
         renderBoard();
     } catch (error) {
         showError('Failed to load kanban board: ' + error.message);
@@ -108,6 +111,8 @@ function createColumnElement(column) {
 
     const header = document.createElement('div');
     header.className = 'column-header';
+    header.draggable = true;
+    header.style.cursor = 'grab';
 
     const titleDiv = document.createElement('div');
     titleDiv.style.display = 'flex';
@@ -148,6 +153,24 @@ function createColumnElement(column) {
 
     header.appendChild(titleDiv);
     header.appendChild(deleteBtn);
+
+    // Column drag events
+    header.addEventListener('dragstart', (e) => {
+        draggedColumn = column;
+        columnDiv.classList.add('column-dragging');
+        header.style.cursor = 'grabbing';
+        e.dataTransfer.effectAllowed = 'move';
+    });
+
+    header.addEventListener('dragend', (e) => {
+        columnDiv.classList.remove('column-dragging');
+        header.style.cursor = 'grab';
+        document.querySelectorAll('.kanban-column').forEach(col => {
+            col.classList.remove('column-drag-over');
+        });
+        draggedColumn = null;
+        dragOverColumn = null;
+    });
 
     const cardsContainer = document.createElement('div');
     cardsContainer.className = 'cards-container';
@@ -195,6 +218,29 @@ function createColumnElement(column) {
         // Store the current column ID for new card
         cardForm.dataset.columnId = column.id;
         cardModal.showModal();
+    });
+
+    // Column drop zone events
+    columnDiv.addEventListener('dragover', (e) => {
+        if (draggedColumn && draggedColumn.id !== column.id) {
+            e.preventDefault();
+            columnDiv.classList.add('column-drag-over');
+            dragOverColumn = column;
+        }
+    });
+
+    columnDiv.addEventListener('dragleave', (e) => {
+        if (e.target === columnDiv || !columnDiv.contains(e.relatedTarget)) {
+            columnDiv.classList.remove('column-drag-over');
+        }
+    });
+
+    columnDiv.addEventListener('drop', (e) => {
+        e.preventDefault();
+        columnDiv.classList.remove('column-drag-over');
+        if (draggedColumn && draggedColumn.id !== column.id) {
+            reorderColumns(draggedColumn.id, column.id);
+        }
     });
 
     columnDiv.appendChild(header);
@@ -577,6 +623,82 @@ function showColumnContextMenu(event, columnId, h2Element) {
     setTimeout(() => {
         document.addEventListener('click', closeMenu);
     }, 0);
+// Reorder columns
+async function reorderColumns(draggedColumnId, targetColumnId) {
+    // Find indices
+    const draggedIndex = columns.findIndex(c => c.id === draggedColumnId);
+    const targetIndex = columns.findIndex(c => c.id === targetColumnId);
+
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    // Reorder columns array
+    const [draggedCol] = columns.splice(draggedIndex, 1);
+    columns.splice(targetIndex, 0, draggedCol);
+
+    // Update positions
+    columns.forEach((col, index) => {
+        col.position = index + 1;
+    });
+
+    // Save to localStorage
+    saveColumnOrder();
+
+    // Re-render immediately for smooth UX
+    renderBoard();
+
+    // Update positions on backend
+    try {
+        await updateColumnPositions();
+    } catch (error) {
+        showError('Failed to save column order: ' + error.message);
+        // Reload from server on error
+        await loadColumns();
+    }
+}
+
+// Save column order to localStorage
+function saveColumnOrder() {
+    const columnOrder = columns.map(col => ({ id: col.id, position: col.position }));
+    localStorage.setItem('kanban-column-order', JSON.stringify(columnOrder));
+}
+
+// Load and apply column order from localStorage
+function loadColumnOrder() {
+    const savedOrder = localStorage.getItem('kanban-column-order');
+    if (!savedOrder) return;
+
+    try {
+        const columnOrder = JSON.parse(savedOrder);
+        const orderMap = new Map(columnOrder.map(c => [c.id, c.position]));
+
+        // Apply saved positions
+        columns.forEach(col => {
+            if (orderMap.has(col.id)) {
+                col.position = orderMap.get(col.id);
+            }
+        });
+
+        // Sort by position
+        columns.sort((a, b) => a.position - b.position);
+    } catch (error) {
+        console.error('Failed to load column order:', error);
+    }
+}
+
+// Update column positions on the backend
+async function updateColumnPositions() {
+    const updates = columns.map(col => ({
+        id: col.id,
+        position: col.position
+    }));
+
+    const response = await fetch('/api/columns/reorder', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ columns: updates })
+    });
+
+    if (!response.ok) throw new Error('Failed to update column positions');
 }
 
 // Generate AI prompt for a card
