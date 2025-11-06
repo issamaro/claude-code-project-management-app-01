@@ -110,11 +110,23 @@ header h1 {
     border: 1px solid var(--pico-card-border-color);
     border-radius: var(--pico-border-radius);
     overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, opacity 0.2s ease;
 }
 
 .kanban-column:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.kanban-column.column-dragging {
+    opacity: 0.5;
+    transform: scale(0.95) rotate(2deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.kanban-column.column-drag-over {
+    border: 2px solid var(--pico-primary);
+    box-shadow: 0 0 20px var(--pico-primary-focus);
+    transform: scale(1.02);
 }
 
 .column-header {
@@ -124,6 +136,12 @@ header h1 {
     padding: 0.85rem;
     border-bottom: 2px solid var(--pico-primary);
     background: var(--column-header-bg);
+    transition: background 0.2s ease, transform 0.2s ease;
+    user-select: none;
+}
+
+.column-header:active {
+    cursor: grabbing !important;
 }
 
 .column-header h2 {
