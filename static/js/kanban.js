@@ -654,6 +654,8 @@ function showColumnContextMenu(event, columnId, h2Element) {
     setTimeout(() => {
         document.addEventListener('click', closeMenu);
     }, 0);
+}
+
 // Reorder columns
 async function reorderColumns(draggedColumnId, targetColumnId) {
     // Find indices

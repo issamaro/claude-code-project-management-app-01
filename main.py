@@ -125,11 +125,15 @@ async def get_columns(db: Session = Depends(get_db)):
 @app.post("/api/columns", response_model=ColumnSchema)
 async def create_column(request: CreateColumnRequest, db: Session = Depends(get_db)):
     """Create a new column."""
+    # Validate title is not empty
+    if not request.title or not request.title.strip():
+        raise HTTPException(status_code=400, detail="Column title cannot be empty")
+
     # Get the highest position
     max_position = db.query(func.max(Column.position)).scalar()
     new_position = (max_position or 0) + 1.0
 
-    new_column = Column(title=request.title, position=new_position)
+    new_column = Column(title=request.title.strip(), position=new_position)
     db.add(new_column)
     db.commit()
     db.refresh(new_column)
