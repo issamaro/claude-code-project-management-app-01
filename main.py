@@ -76,6 +76,10 @@ class CreateColumnRequest(BaseModel):
     title: str
 
 
+class UpdateColumnRequest(BaseModel):
+    title: str
+
+
 # Routes
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
@@ -128,6 +132,55 @@ async def create_column(request: CreateColumnRequest, db: Session = Depends(get_
         "title": new_column.title,
         "position": new_column.position,
         "cards": []
+    }
+
+
+@app.put("/api/columns/{column_id}", response_model=ColumnSchema)
+async def update_column(
+    column_id: int, request: UpdateColumnRequest, db: Session = Depends(get_db)
+):
+    """Update a column's title."""
+    column = db.query(Column).filter(Column.id == column_id).first()
+    if not column:
+        raise HTTPException(status_code=404, detail="Column not found")
+
+    # Check if the new title is empty
+    if not request.title or not request.title.strip():
+        raise HTTPException(status_code=400, detail="Column title cannot be empty")
+
+    # Check if another column already has this title
+    existing_column = (
+        db.query(Column)
+        .filter(Column.title == request.title, Column.id != column_id)
+        .first()
+    )
+    if existing_column:
+        raise HTTPException(
+            status_code=400, detail="A column with this title already exists"
+        )
+
+    column.title = request.title.strip()
+    db.commit()
+    db.refresh(column)
+
+    # Get cards for response
+    cards = db.query(Card).filter(Card.column_id == column.id).order_by(Card.position).all()
+
+    return {
+        "id": column.id,
+        "title": column.title,
+        "position": column.position,
+        "cards": [
+            {
+                "id": card.id,
+                "title": card.title,
+                "notes": card.notes,
+                "column_id": card.column_id,
+                "position": card.position,
+                "created_at": card.created_at,
+            }
+            for card in cards
+        ],
     }
 
 

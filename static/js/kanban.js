@@ -116,6 +116,19 @@ function createColumnElement(column) {
 
     const h2 = document.createElement('h2');
     h2.textContent = escapeHtml(column.title);
+    h2.style.cursor = 'pointer';
+    h2.title = 'Double-click or right-click to rename';
+
+    // Add double-click to rename
+    h2.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        startColumnRename(column.id, h2);
+    });
+
+    // Add right-click context menu
+    h2.addEventListener('contextmenu', (e) => {
+        showColumnContextMenu(e, column.id, h2);
+    });
 
     const countSpan = document.createElement('span');
     countSpan.className = 'card-count';
@@ -422,6 +435,148 @@ async function deleteColumn(columnId) {
     } catch (error) {
         showError('Failed to delete column: ' + error.message);
     }
+}
+
+// Rename a column
+async function renameColumn(columnId, newTitle) {
+    try {
+        const response = await fetch(`/api/columns/${columnId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: newTitle })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to rename column');
+        }
+
+        await loadColumns();
+        showSuccess('Column renamed successfully');
+    } catch (error) {
+        showError('Failed to rename column: ' + error.message);
+        throw error; // Re-throw to handle in calling function
+    }
+}
+
+// Start inline editing for column title
+function startColumnRename(columnId, h2Element) {
+    const currentTitle = h2Element.textContent;
+
+    // Create input element
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'column-title-input';
+    input.value = currentTitle;
+
+    // Function to save the new title
+    const save = async () => {
+        const newTitle = input.value.trim();
+
+        // Validate: not empty
+        if (!newTitle) {
+            showError('Column title cannot be empty');
+            input.focus();
+            return;
+        }
+
+        // Validate: not duplicate
+        const isDuplicate = columns.some(col =>
+            col.id !== columnId && col.title.toLowerCase() === newTitle.toLowerCase()
+        );
+
+        if (isDuplicate) {
+            showError('A column with this title already exists');
+            input.focus();
+            return;
+        }
+
+        // If title hasn't changed, just restore
+        if (newTitle === currentTitle) {
+            h2Element.textContent = currentTitle;
+            h2Element.style.display = '';
+            input.remove();
+            return;
+        }
+
+        // Save to backend
+        try {
+            await renameColumn(columnId, newTitle);
+            // loadColumns() is called in renameColumn, which will re-render everything
+        } catch (error) {
+            // Error already shown in renameColumn
+            // Restore the h2 with original title
+            h2Element.textContent = currentTitle;
+            h2Element.style.display = '';
+            input.remove();
+        }
+    };
+
+    // Function to cancel editing
+    const cancel = () => {
+        h2Element.textContent = currentTitle;
+        h2Element.style.display = '';
+        input.remove();
+    };
+
+    // Event listeners
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            save();
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            cancel();
+        }
+    });
+
+    input.addEventListener('blur', save);
+
+    // Replace h2 with input
+    h2Element.style.display = 'none';
+    h2Element.parentNode.insertBefore(input, h2Element);
+    input.focus();
+    input.select();
+}
+
+// Show context menu for column
+function showColumnContextMenu(event, columnId, h2Element) {
+    event.preventDefault();
+
+    // Remove any existing context menus
+    const existingMenu = document.querySelector('.column-context-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+
+    // Create context menu
+    const menu = document.createElement('div');
+    menu.className = 'column-context-menu';
+    menu.style.left = event.pageX + 'px';
+    menu.style.top = event.pageY + 'px';
+
+    const renameOption = document.createElement('div');
+    renameOption.className = 'context-menu-item';
+    renameOption.textContent = 'Rename';
+    renameOption.addEventListener('click', () => {
+        menu.remove();
+        startColumnRename(columnId, h2Element);
+    });
+
+    menu.appendChild(renameOption);
+    document.body.appendChild(menu);
+
+    // Close menu on click outside
+    const closeMenu = (e) => {
+        if (!menu.contains(e.target)) {
+            menu.remove();
+            document.removeEventListener('click', closeMenu);
+        }
+    };
+
+    setTimeout(() => {
+        document.addEventListener('click', closeMenu);
+    }, 0);
 }
 
 // Generate AI prompt for a card

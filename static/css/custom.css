@@ -412,3 +412,59 @@ dialog article {
         transform: translateX(-20px);
     }
 }
+
+/* Column rename inline input */
+.column-title-input {
+    background: var(--pico-background-color);
+    color: var(--pico-color);
+    border: 2px solid var(--pico-primary);
+    border-radius: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    outline: none;
+    width: 150px;
+    transition: border-color 0.2s ease;
+}
+
+.column-title-input:focus {
+    border-color: var(--pico-primary-hover);
+    box-shadow: 0 0 0 3px var(--pico-primary-focus);
+}
+
+/* Context menu for column rename */
+.column-context-menu {
+    position: absolute;
+    background: var(--pico-card-background-color);
+    border: 1px solid var(--pico-card-border-color);
+    border-radius: 0.4rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 0.4rem 0;
+    z-index: 1000;
+    min-width: 120px;
+    animation: contextMenuFadeIn 0.15s ease;
+}
+
+@keyframes contextMenuFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.context-menu-item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.context-menu-item:hover {
+    background: var(--pico-primary-focus);
+    color: var(--pico-primary);
+}
