@@ -3,9 +3,14 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Database configuration
-DATABASE_URL = "sqlite:///./kanban.db"
+# Use DATABASE_URL from environment, default to kanban.db for development
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./kanban.db")
 
 engine = create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
