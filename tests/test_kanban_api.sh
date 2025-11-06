@@ -49,19 +49,25 @@ is_valid_json() {
 setup_test_environment() {
     echo "Setting up clean test environment..."
 
+    # Get the script directory and project root
+    SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+
     # Kill any existing server processes
     lsof -ti:8000 2>/dev/null | xargs kill -9 2>/dev/null
 
     # Remove old TEST database to ensure clean state
-    rm -f ../kanban.test.db
+    rm -f "$PROJECT_ROOT/kanban.test.db"
 
     # Start server in background with TEST database
-    cd ..
+
+    cd "$PROJECT_ROOT"
     # Set DATABASE_URL environment variable to use test database
     export DATABASE_URL="sqlite:///./kanban.test.db"
-    python main.py > /dev/null 2>&1 &
+    python main.py > /tmp/test_server.log 2>&1 &
     SERVER_PID=$!
-    cd tests
+    cd "$SCRIPT_DIR"
+    echo "Server starting with PID: $SERVER_PID (logs: /tmp/test_server.log)"
 
     # Wait for server to start
     echo "Waiting for server to start..."
@@ -83,6 +89,11 @@ cleanup_test_environment() {
         echo "Stopping test server (PID: $SERVER_PID)..."
         kill $SERVER_PID 2>/dev/null
     fi
+    # Optional: Remove test database after tests
+    # Uncomment the next line if you want to auto-delete the test database
+    # SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    # PROJECT_ROOT="$( cd "$SCRIPT_DIR/.." && pwd )"
+    # rm -f "$PROJECT_ROOT/kanban.test.db"
 }
 
 #===============================================================================
@@ -706,10 +717,18 @@ echo "BOARD API TEST SUITE"
 echo "=================================================="
 echo ""
 
-# Note: Tests expect the server to be running on localhost:8000
-# IMPORTANT: Tests now use a separate test database (kanban.test.db)
-# Your production database (kanban.db) will NOT be affected
-# You can optionally run: setup_test_environment to start a fresh server with clean test database
+# Setup trap to cleanup on exit
+trap cleanup_test_environment EXIT INT TERM
+
+# Automatically setup test environment with separate test database
+setup_test_environment || {
+    echo "Failed to setup test environment"
+    exit 1
+}
+
+echo ""
+echo "Running tests against test database (kanban.test.db)..."
+echo ""
 
 # Run all tests
 test_get_columns
