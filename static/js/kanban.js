@@ -454,7 +454,7 @@ function showError(message) {
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
-    document.body.insertBefore(errorDiv, document.body.firstChild);
+    document.body.appendChild(errorDiv);
     setTimeout(() => errorDiv.remove(), 4000);
 }
 
@@ -462,7 +462,7 @@ function showSuccess(message) {
     const successDiv = document.createElement('div');
     successDiv.className = 'success-message';
     successDiv.textContent = message;
-    document.body.insertBefore(successDiv, document.body.firstChild);
+    document.body.appendChild(successDiv);
     setTimeout(() => successDiv.remove(), 3000);
 }
 

@@ -199,6 +199,17 @@ header h1 {
     }
 }
 
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
@@ -380,21 +391,31 @@ dialog article {
 }
 
 .error-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
     background: #e74c3c;
     color: white;
-    padding: 0.85rem;
+    padding: 0.85rem 1.25rem;
     border-radius: 0.4rem;
-    margin-bottom: 0.85rem;
-    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease;
+    max-width: 400px;
 }
 
 .success-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
     background: #27ae60;
     color: white;
-    padding: 0.85rem;
+    padding: 0.85rem 1.25rem;
     border-radius: 0.4rem;
-    margin-bottom: 0.85rem;
-    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 0.3s ease;
+    max-width: 400px;
 }
 
 /* Fade out animation for deleted items */
