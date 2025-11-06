@@ -23,7 +23,7 @@ class Column(Base):
     title = SAColumn(String, index=True)
     position = SAColumn(Float, default=0.0)
 
-    cards = relationship("Card", back_populates="column", cascade="all, delete-orphan")
+    cards = relationship("Card", back_populates="column")
 
 
 class Card(Base):

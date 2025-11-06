@@ -108,10 +108,33 @@ function createColumnElement(column) {
 
     const header = document.createElement('div');
     header.className = 'column-header';
-    header.innerHTML = `
-        <h2>${escapeHtml(column.title)}</h2>
-        <span class="card-count">${column.cards.length}</span>
-    `;
+
+    const titleDiv = document.createElement('div');
+    titleDiv.style.display = 'flex';
+    titleDiv.style.alignItems = 'center';
+    titleDiv.style.gap = '0.5rem';
+
+    const h2 = document.createElement('h2');
+    h2.textContent = escapeHtml(column.title);
+
+    const countSpan = document.createElement('span');
+    countSpan.className = 'card-count';
+    countSpan.textContent = column.cards.length;
+
+    titleDiv.appendChild(h2);
+    titleDiv.appendChild(countSpan);
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'column-delete-btn';
+    deleteBtn.textContent = '×';
+    deleteBtn.title = 'Delete column';
+    deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteColumn(column.id);
+    });
+
+    header.appendChild(titleDiv);
+    header.appendChild(deleteBtn);
 
     const cardsContainer = document.createElement('div');
     cardsContainer.className = 'cards-container';
@@ -186,6 +209,15 @@ function createCardElement(card) {
     const footer = document.createElement('div');
     footer.className = 'card-footer';
 
+    const aiBtn = document.createElement('button');
+    aiBtn.className = 'card-btn-ai';
+    aiBtn.innerHTML = '🤖 AI';
+    aiBtn.title = 'Generate AI prompt';
+    aiBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        generateAIPrompt(card.id, aiBtn);
+    });
+
     const editBtn = document.createElement('button');
     editBtn.className = 'card-btn-edit';
     editBtn.textContent = 'Edit';
@@ -202,6 +234,7 @@ function createCardElement(card) {
         deleteCard(card.id);
     });
 
+    footer.appendChild(aiBtn);
     footer.appendChild(editBtn);
     footer.appendChild(deleteBtn);
 
@@ -366,6 +399,53 @@ async function addColumn() {
         showSuccess('Column added successfully');
     } catch (error) {
         showError('Failed to add column: ' + error.message);
+    }
+}
+
+// Delete a column
+async function deleteColumn(columnId) {
+    if (!confirm('Are you sure you want to delete this column? All cards will be moved to the first column.')) return;
+
+    try {
+        const response = await fetch(`/api/columns/${columnId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to delete column');
+        }
+
+        const data = await response.json();
+        await loadColumns();
+        showSuccess(data.message);
+    } catch (error) {
+        showError('Failed to delete column: ' + error.message);
+    }
+}
+
+// Generate AI prompt for a card
+async function generateAIPrompt(cardId, button) {
+    const originalText = button.innerHTML;
+    button.innerHTML = '⏳ Generating...';
+    button.disabled = true;
+
+    try {
+        const response = await fetch(`/api/cards/${cardId}/generate-prompt`, {
+            method: 'POST'
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Failed to generate prompt');
+        }
+
+        await loadColumns();
+        showSuccess('AI prompt generated and added to notes!');
+    } catch (error) {
+        showError('Failed to generate AI prompt: ' + error.message);
+        button.innerHTML = originalText;
+        button.disabled = false;
     }
 }
 

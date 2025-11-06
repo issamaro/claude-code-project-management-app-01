@@ -6,7 +6,8 @@ A beautiful, responsive kanban board application built with FastAPI and PicoCSS.
 
 - **Drag & Drop**: Smoothly drag cards between columns with visual feedback
 - **Task Management**: Create, edit, and delete tasks with titles and notes
-- **Custom Columns**: Add new columns to organize your workflow
+- **AI-Powered Prompts**: Generate implementation prompts using Claude AI (requires API key)
+- **Custom Columns**: Add new columns to organize your workflow, or delete columns (cards auto-move)
 - **Beautiful UI**: Built with PicoCSS with a modern purple theme
 - **Responsive Design**: Works great on desktop, tablet, and mobile
 - **No Authentication**: Simple and straightforward - no login required
@@ -31,7 +32,26 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. **Run the application:**
+3. **Setup Anthropic API Key (Optional, for AI features):**
+   - Get your API key from [Anthropic Console](https://console.anthropic.com/)
+   - Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   - Edit `.env` and add your API key:
+   ```
+   ANTHROPIC_API_KEY=your_actual_api_key_here
+   CLAUDE_MODEL=claude-sonnet-4-5-20250929
+   ```
+   - **Available Claude models** (use the model available in your account):
+     - `claude-sonnet-4-5-20250929` (latest, default, recommended)
+     - `claude-3-5-sonnet-20241022`
+     - `claude-3-sonnet-20240229`
+     - `claude-3-opus-20240229`
+     - Other available models in your account
+   - The AI prompt generation feature will only work if the API key is configured and the model is available in your account
+
+4. **Run the application:**
 ```bash
 python main.py
 ```
@@ -63,6 +83,19 @@ The application will be available at `http://localhost:8000`
 2. Enter the column title
 3. Click **"Add Column"** to create it
 
+### Deleting Columns
+1. Hover over a column header and click the **"×"** button on the right
+2. Confirm the deletion
+3. All cards in that column will automatically move to the leftmost column
+4. Note: You cannot delete the last remaining column
+
+### Using AI to Generate Task Prompts
+1. Click the **"🤖 AI"** button on any task card
+2. The system will generate a concise implementation prompt using Claude AI
+3. The AI prompt will be appended to the task's notes section
+4. Click **"Edit"** to view the complete notes with the AI prompt
+5. **Note**: Requires ANTHROPIC_API_KEY to be configured in `.env`
+
 ## Project Structure
 
 ```
@@ -89,13 +122,17 @@ vscode/
 
 ## API Endpoints
 
-- `GET /` - Render kanban board page
+### Columns
 - `GET /api/columns` - Get all columns with cards
 - `POST /api/columns` - Create new column
+- `DELETE /api/columns/{id}` - Delete column (moves cards to leftmost column)
+
+### Cards
 - `POST /api/cards` - Create new card
-- `PUT /api/cards/{id}` - Update card
+- `PUT /api/cards/{id}` - Update card (title, notes)
 - `PATCH /api/cards/{id}/move` - Move card between columns
 - `DELETE /api/cards/{id}` - Delete card
+- `POST /api/cards/{id}/generate-prompt` - Generate AI prompt for card (requires API key)
 
 ## Customization
 
